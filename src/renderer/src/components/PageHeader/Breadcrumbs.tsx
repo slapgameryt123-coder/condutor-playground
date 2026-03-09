@@ -1,13 +1,14 @@
 import { useMemo } from 'react'
+import type { PageData } from '../../../../preload'
 import { usePagesStore } from '../../store/pagesStore'
 
-export function Breadcrumbs() {
-  const { activePage, pages, selectPage } = usePagesStore()
+export function Breadcrumbs({ page }: { page: PageData | null }) {
+  const { pages, selectPage } = usePagesStore()
 
   const crumbs = useMemo(() => {
-    if (!activePage) return []
+    if (!page) return []
     const result: { id: string; title: string; emoji: string }[] = []
-    let currentId: string | null = activePage.parent_id
+    let currentId: string | null = page.parent_id
 
     while (currentId) {
       const parent = pages.find((p) => p.id === currentId)
@@ -17,7 +18,7 @@ export function Breadcrumbs() {
     }
 
     return result
-  }, [activePage, pages])
+  }, [page, pages])
 
   if (crumbs.length === 0) return null
 

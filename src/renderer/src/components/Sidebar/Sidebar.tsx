@@ -15,6 +15,9 @@ export function Sidebar() {
     activePageId,
     createPage,
     selectPage,
+    openPageInNewTab,
+    splitActivePane,
+    openPageInActivePane,
     updatePage,
     trashPage,
     searchQuery,
@@ -122,8 +125,8 @@ export function Sidebar() {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-full bg-notion-sidebar border-r border-notion-border flex flex-col z-10 transition-transform duration-200 ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      className={`notion-sidebar fixed top-0 left-0 h-full bg-notion-sidebar border-r border-notion-border flex flex-col z-10 ${
+        sidebarOpen ? 'is-open translate-x-0' : 'is-closed -translate-x-full'
       }`}
       style={{ width: 240 }}
     >
@@ -235,6 +238,24 @@ export function Sidebar() {
             className="notion-menu-item w-full text-left px-2 py-1.5 text-sm"
           >
             Open page
+          </button>
+          <button
+            onClick={() => {
+              void openPageInNewTab(contextMenu.page.id)
+              setContextMenu(null)
+            }}
+            className="notion-menu-item w-full text-left px-2 py-1.5 text-sm"
+          >
+            Open in new tab
+          </button>
+          <button
+            onClick={() => {
+              void splitActivePane().then(() => openPageInActivePane(contextMenu.page.id))
+              setContextMenu(null)
+            }}
+            className="notion-menu-item w-full text-left px-2 py-1.5 text-sm"
+          >
+            Open in split view
           </button>
           <button
             onClick={() => {

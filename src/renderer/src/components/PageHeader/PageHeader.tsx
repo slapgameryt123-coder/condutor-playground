@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import type { PageData } from '../../../../preload'
 import { usePagesStore } from '../../store/pagesStore'
 
 const EMOJIS = [
@@ -8,8 +9,9 @@ const EMOJIS = [
   '📊', '📈', '🗓️', '✅', '❤️', '💬', '🔔', '🎉', '🤝', '👤',
 ]
 
-export function PageHeader() {
-  const { activePage, updatePage } = usePagesStore()
+export function PageHeader({ page }: { page: PageData | null }) {
+  const { updatePage } = usePagesStore()
+  const activePage = page
   const [isEditingTitle, setIsEditingTitle] = useState(false)
   const [titleValue, setTitleValue] = useState('')
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
