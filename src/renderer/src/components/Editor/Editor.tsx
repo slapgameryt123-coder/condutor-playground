@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { BlockNoteEditor, PartialBlock } from '@blocknote/core'
 import { filterSuggestionItems } from '@blocknote/core/extensions'
 import { BlockNoteView } from '@blocknote/mantine'
 import {
   DefaultReactSuggestionItem,
   SuggestionMenuController,
   SuggestionMenuProps,
-  getDefaultReactSlashMenuItems,
   useCreateBlockNote,
 } from '@blocknote/react'
 import { usePagesStore } from '../../store/pagesStore'
+import { editorSchema } from './blockSpecs'
+import { getSlashMenuItems } from './slashMenuItems'
 
 function getPreviewLines(item: DefaultReactSuggestionItem): string[] {
   const title = item.title.toLowerCase()
@@ -37,6 +37,18 @@ function getPreviewLines(item: DefaultReactSuggestionItem): string[] {
   }
   if (title.includes('divider')) {
     return ['────────────']
+  }
+  if (title.includes('calendar')) {
+    return ['March planning', 'Team syncs and due dates']
+  }
+  if (title.includes('bookmark')) {
+    return ['Project docs', 'https://example.com/spec']
+  }
+  if (title.includes('callout')) {
+    return ['Important: review this section before shipping']
+  }
+  if (title.includes('toggle')) {
+    return ['▸ Click to expand details']
   }
 
   return ['Start writing here…']
@@ -105,11 +117,11 @@ export function Editor() {
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
   const pageIdRef = useRef<string | null>(null)
 
-  const initialContent = useMemo((): PartialBlock[] | undefined => {
+  const initialContent = useMemo(() => {
     if (!activePage?.content) return undefined
     try {
       const parsed = JSON.parse(activePage.content)
-      return parsed.length > 0 ? parsed : undefined
+      return Array.isArray(parsed) && parsed.length > 0 ? parsed : undefined
     } catch {
       return undefined
     }
@@ -117,12 +129,13 @@ export function Editor() {
 
   const editor = useCreateBlockNote(
     {
+      schema: editorSchema,
       initialContent,
     },
     [activePage?.id]
   )
 
-  const slashMenuItems = useMemo(() => getDefaultReactSlashMenuItems(editor), [editor])
+  const slashMenuItems = useMemo(() => getSlashMenuItems(editor), [editor])
 
   useEffect(() => {
     pageIdRef.current = activePage?.id ?? null
