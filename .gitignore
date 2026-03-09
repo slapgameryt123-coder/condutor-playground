@@ -1,0 +1,7 @@
+node_modules/
+out/
+dist/
+*.db
+*.db-journal
+notion-clone-data.json
+.DS_Store

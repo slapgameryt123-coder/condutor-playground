@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: #37352f;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+/* Notion-style scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d3d1cb;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #aeaca7;
+}
+
+.notion-menu-panel {
+  background: #ffffff;
+  border: 1px solid rgba(55, 53, 47, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(15, 15, 15, 0.16), 0 1px 2px rgba(15, 15, 15, 0.08);
+}
+
+.notion-menu-item {
+  border-radius: 6px;
+  transition: background-color 120ms ease;
+}
+
+.notion-menu-item:hover {
+  background: rgba(55, 53, 47, 0.08);
+}
+
+.bn-mantine .mantine-Menu-dropdown,
+.bn-mantine .bn-menu-dropdown,
+.bn-mantine .bn-suggestion-menu,
+.bn-mantine .bn-form-popover,
+.bn-mantine .bn-combobox-input,
+.bn-mantine .bn-combobox-items:not(:empty),
+.bn-mantine .bn-panel,
+.bn-mantine .bn-grid-suggestion-menu {
+  background: #ffffff;
+  border: 1px solid rgba(55, 53, 47, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(15, 15, 15, 0.16), 0 1px 2px rgba(15, 15, 15, 0.08);
+  padding: 4px;
+}
+
+.bn-mantine .mantine-Menu-item,
+.bn-mantine .bn-suggestion-menu-item,
+.bn-mantine .bn-grid-suggestion-menu-item,
+.bn-mantine .bn-toolbar .mantine-Button-root,
+.bn-mantine .bn-toolbar .mantine-ActionIcon-root,
+.bn-mantine .bn-side-menu .mantine-Menu-item {
+  border-radius: 6px;
+}
+
+.bn-mantine .mantine-Menu-item,
+.bn-mantine .bn-suggestion-menu-item,
+.bn-mantine .bn-grid-suggestion-menu-item,
+.bn-mantine .bn-toolbar .mantine-Button-root,
+.bn-mantine .bn-toolbar .mantine-ActionIcon-root,
+.bn-mantine .bn-side-menu .mantine-UnstyledButton-root:hover,
+.bn-mantine .bn-side-menu .mantine-Menu-item:hover {
+  background: rgba(55, 53, 47, 0.08);
+}
+
+.bn-mantine .bn-toolbar {
+  padding: 4px;
+  gap: 4px;
+}
+
+.notion-blocks-menu {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) 220px;
+  gap: 8px;
+  max-height: 420px;
+  min-width: 500px;
+}
+
+.notion-blocks-menu-list {
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.notion-blocks-menu-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+  border-radius: 8px;
+  padding: 8px;
+  color: #37352f;
+}
+
+.notion-blocks-menu-item:hover,
+.notion-blocks-menu-item.is-selected {
+  background: rgba(55, 53, 47, 0.08);
+}
+
+.notion-blocks-menu-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #f7f6f3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b6a67;
+  flex-shrink: 0;
+}
+
+.notion-blocks-menu-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.notion-blocks-menu-title {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.notion-blocks-menu-subtext {
+  font-size: 12px;
+  line-height: 16px;
+  color: #787774;
+}
+
+.notion-blocks-menu-preview-wrap {
+  border-left: 1px solid rgba(55, 53, 47, 0.1);
+  padding-left: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notion-blocks-menu-preview-title {
+  font-size: 12px;
+  color: #787774;
+  padding: 6px 8px 0;
+}
+
+.notion-block-preview-card {
+  border: 1px solid rgba(55, 53, 47, 0.1);
+  border-radius: 8px;
+  background: #fbfbfa;
+  padding: 10px;
+  margin: 0 8px 8px;
+}
+
+.notion-block-preview-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #9b9a97;
+  margin-bottom: 8px;
+}
+
+.notion-block-preview-content {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #4a4946;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notion-blocks-menu-loading {
+  min-width: 280px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #787774;
+}
+
+/* Electron title bar drag region */
+.titlebar-drag {
+  -webkit-app-region: drag;
+}
+.titlebar-no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* BlockNote overrides for Notion feel */
+.bn-container .bn-editor {
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #37352f;
+}
+
+.bn-container .bn-block-group {
+  padding: 0;
+}
+
+.bn-container [data-content-type="heading"] h1 {
+  font-size: 1.875em;
+  font-weight: 700;
+  margin-top: 2em;
+  margin-bottom: 4px;
+}
+
+.bn-container [data-content-type="heading"] h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-top: 1.4em;
+  margin-bottom: 1px;
+}
+
+.bn-container [data-content-type="heading"] h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin-top: 1em;
+  margin-bottom: 1px;
+}
