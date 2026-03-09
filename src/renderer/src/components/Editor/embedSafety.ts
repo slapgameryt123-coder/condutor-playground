@@ -1,5 +1,7 @@
 const BLOCKED_PROTOCOLS = new Set(['javascript:', 'data:', 'file:'])
 const CALENDAR_ALLOWED_HOSTS = ['calendar.google.com', 'www.google.com', 'calendly.com'] as const
+const VIDEO_ALLOWED_HOSTS = ['youtube.com', 'www.youtube.com', 'youtu.be', 'vimeo.com', 'www.vimeo.com'] as const
+const IMAGE_ALLOWED_HOSTS = ['images.unsplash.com', 'cdn.pixabay.com', 'images.pexels.com'] as const
 
 type UrlValidationResult =
   | { ok: true; normalizedUrl: string; hostname: string }
@@ -64,12 +66,27 @@ export function validateExternalUrl(rawValue: string): UrlValidationResult {
   }
 }
 
+function hostAllowed(hostname: string, allowedHosts: readonly string[]): boolean {
+  return allowedHosts.some((host) => hostname === host || hostname.endsWith(`.${host}`))
+}
+
 export function isAllowedCalendarUrl(rawValue: string): boolean {
   const validated = validateExternalUrl(rawValue)
   if (!validated.ok) return false
 
-  return CALENDAR_ALLOWED_HOSTS.some(
-    (host) => validated.hostname === host || validated.hostname.endsWith(`.${host}`)
-  )
+  return hostAllowed(validated.hostname, CALENDAR_ALLOWED_HOSTS)
 }
 
+export function isAllowedVideoUrl(rawValue: string): boolean {
+  const validated = validateExternalUrl(rawValue)
+  if (!validated.ok) return false
+
+  return hostAllowed(validated.hostname, VIDEO_ALLOWED_HOSTS)
+}
+
+export function isAllowedImageUrl(rawValue: string): boolean {
+  const validated = validateExternalUrl(rawValue)
+  if (!validated.ok) return false
+
+  return hostAllowed(validated.hostname, IMAGE_ALLOWED_HOSTS)
+}
